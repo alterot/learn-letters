@@ -9,6 +9,7 @@ const Game: React.FC = () => {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
   const [showContinue, setShowContinue] = useState<boolean>(false);
+  const [gameFinished, setGameFinished] = useState<boolean>(false);
   const images = [
     { src: apaImage, name: 'apa' },
     { src: bananImage, name: 'banan' },
@@ -20,6 +21,7 @@ const Game: React.FC = () => {
     setShowContinue(false);
     setFeedback(null);
     setImage(null);
+    setGameFinished(false);
     continueGame();
   };
 
@@ -31,7 +33,7 @@ const Game: React.FC = () => {
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
-    if (image) {
+    if (image && !gameFinished) {
       const currentImage = images.find(img => img.src === image);
       if (currentImage && event.key.toLowerCase() === currentImage.name[0]) {
         setFeedback('Correct!');
@@ -40,6 +42,7 @@ const Game: React.FC = () => {
           if (newScore === 5) {
             setFeedback('Congratulations! You\'ve finished the game with a score of 5!');
             setShowContinue(false); // Hide the continue button when the game is finished
+            setGameFinished(true); // Mark the game as finished
           } else {
             setShowContinue(true);
           }
@@ -53,11 +56,15 @@ const Game: React.FC = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    if (!gameFinished) {
+      window.addEventListener('keydown', handleKeyPress);
+    } else {
+      window.removeEventListener('keydown', handleKeyPress);
+    }
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [image]);
+  }, [image, gameFinished]);
 
   return (
     <GameUI
