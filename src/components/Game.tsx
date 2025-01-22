@@ -12,6 +12,7 @@ const Game: React.FC = () => {
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gameCompletedBefore, setGameCompletedBefore] = useState<boolean>(false);
+  const [userInput, setUserInput] = useState<string>('');
   const images = [
     { src: apaImage, name: 'apa' },
     { src: bananImage, name: 'banan' },
@@ -25,6 +26,7 @@ const Game: React.FC = () => {
     setImage(null);
     setGameFinished(false);
     setGameStarted(true);
+    setUserInput(''); // Reset user input
     continueGame();
   };
 
@@ -33,12 +35,15 @@ const Game: React.FC = () => {
     setImage(randomImage.src);
     setFeedback(null);
     setShowContinue(false);
+    setUserInput(''); 
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
+    const key = event.key.toUpperCase();
+    setUserInput(key);
     if (image && !gameFinished) {
       const currentImage = images.find(img => img.src === image);
-      if (currentImage && event.key.toLowerCase() === currentImage.name[0]) {
+      if (currentImage && key === currentImage.name[0].toUpperCase()) {
         setFeedback('Correct!');
         setScore(prevScore => {
           const newScore = prevScore + 1;
@@ -81,6 +86,7 @@ const Game: React.FC = () => {
       onContinue={continueGame}
       gameStarted={gameStarted}
       gameCompletedBefore={gameCompletedBefore}
+      userInput={userInput}
     />
   );
 };
