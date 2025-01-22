@@ -36,14 +36,20 @@ const Game: React.FC = () => {
     setGameStarted(true);
     setUserInput(''); // Reset user input
     setRemainingImages(images); // Initialize remaining images
-    continueGame();
   };
-
+  
+  useEffect(() => {
+    if (gameStarted && !gameFinished) {
+      continueGame();
+    }
+  }, [gameStarted, gameFinished]);
+  
   const continueGame = () => {
     if (remainingImages.length === 0) {
       setGameFinished(true);
       setGameStarted(false);
       setFeedback('Congratulations! You\'ve guessed all the images correctly! 🎉');
+      setGameCompletedBefore(true); // Update gameCompletedBefore when game is finished
       return;
     }
     const randomIndex = Math.floor(Math.random() * remainingImages.length);
