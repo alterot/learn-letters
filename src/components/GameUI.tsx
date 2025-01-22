@@ -16,7 +16,7 @@ interface GameUIProps {
 const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput, gameFinished }) => {
   return (
     <div>
-      <h1 className="score-container">Poäng: {score} / 6</h1>
+      <h1 className="score-container">Poäng: {score} / 8</h1>
       <div className="image-container" style={{ position: 'relative' }}>
         {image && <img src={image} alt="current" />}
         {feedback === 'Correct!' && <div className="feedback-icon correct">✔</div>}

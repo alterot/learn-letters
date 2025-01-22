@@ -7,6 +7,8 @@ import elefantImage from '../images/elefant.jpg';
 import fjarilImage from '../images/fjaril.jpg';
 import hundImage from '../images/hund.jpg';
 import GameUI from './GameUI';
+import correctSound from '../sounds/correct.wav';
+import incorrectSound from '../sounds/incorrect.wav';
 
 const images = [
   { src: apaImage, name: 'apa' },
@@ -17,6 +19,9 @@ const images = [
   { src: fjarilImage, name: 'fjäril' },
   { src: hundImage, name: 'hund' },
 ];
+
+const correctAudio = new Audio(correctSound);
+const incorrectAudio = new Audio(incorrectSound);
 
 const Game: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -29,6 +34,12 @@ const Game: React.FC = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [remainingImages, setRemainingImages] = useState(images); // New state for remaining images
 
+  useEffect(() => {
+    // Preload audio files
+    correctAudio.load();
+    incorrectAudio.load();
+  }, []);
+
   const startGame = () => {
     setScore(0); // Reset score when starting a new game
     setShowContinue(false);
@@ -39,13 +50,13 @@ const Game: React.FC = () => {
     setUserInput(''); // Reset user input
     setRemainingImages(images); // Initialize remaining images
   };
-  
+
   useEffect(() => {
     if (gameStarted && !gameFinished) {
       continueGame();
     }
   }, [gameStarted, gameFinished]);
-  
+
   const continueGame = () => {
     if (remainingImages.length === 0) {
       setGameFinished(true);
@@ -64,6 +75,16 @@ const Game: React.FC = () => {
 
   const handleKeyPress = (event: KeyboardEvent) => {
     const key = event.key.toUpperCase();
+    if (key === 'ENTER') {
+      if (!gameStarted) {
+        startGame();
+      } else if (showContinue && !gameFinished) {
+        continueGame();
+      } else if (gameFinished) {
+        startGame(); // Restart the game if it is finished
+      }
+      return;
+    }
     setUserInput(key);
     if (image && !gameFinished) {
       const currentImage = images.find(img => img.src === image);
@@ -72,9 +93,11 @@ const Game: React.FC = () => {
         setScore(prevScore => prevScore + 1);
         setRemainingImages(prevImages => prevImages.filter(img => img.src !== image)); // Remove correctly guessed image
         setShowContinue(true);
+        correctAudio.play(); // Play correct sound
       } else {
         setFeedback('Try again!');
         setShowContinue(true);
+        incorrectAudio.play(); // Play incorrect sound
       }
     }
   };
@@ -88,7 +111,7 @@ const Game: React.FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [image, gameFinished]);
+  }, [image, gameFinished, showContinue, gameStarted]);
 
   return (
     <GameUI
