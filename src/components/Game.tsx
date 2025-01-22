@@ -10,6 +10,8 @@ const Game: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [showContinue, setShowContinue] = useState<boolean>(false);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameCompletedBefore, setGameCompletedBefore] = useState<boolean>(false);
   const images = [
     { src: apaImage, name: 'apa' },
     { src: bananImage, name: 'banan' },
@@ -22,6 +24,7 @@ const Game: React.FC = () => {
     setFeedback(null);
     setImage(null);
     setGameFinished(false);
+    setGameStarted(true);
     continueGame();
   };
 
@@ -43,6 +46,8 @@ const Game: React.FC = () => {
             setFeedback('Congratulations! You\'ve finished the game with a score of 5!');
             setShowContinue(false); // Hide the continue button when the game is finished
             setGameFinished(true); // Mark the game as finished
+            setGameStarted(false); // Mark the game as not started
+            setGameCompletedBefore(true); // Mark the game as completed before
           } else {
             setShowContinue(true);
           }
@@ -74,6 +79,8 @@ const Game: React.FC = () => {
       showContinue={showContinue}
       onStart={startGame}
       onContinue={continueGame}
+      gameStarted={gameStarted}
+      gameCompletedBefore={gameCompletedBefore}
     />
   );
 };
