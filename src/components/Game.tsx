@@ -6,6 +6,7 @@ import delfinImage from '../images/delfin.jpg';
 import elefantImage from '../images/elefant.jpg';
 import fjarilImage from '../images/fjaril.jpg';
 import hundImage from '../images/hund.jpg';
+import salImage from '../images/sal.jpg';
 import GameUI from './GameUI';
 import correctSound from '../sounds/correct.wav';
 import incorrectSound from '../sounds/incorrect.wav';
@@ -18,6 +19,7 @@ const images = [
   { src: elefantImage, name: 'elefant' },
   { src: fjarilImage, name: 'fjäril' },
   { src: hundImage, name: 'hund' },
+  { src: salImage, name: 'säl' },
 ];
 
 const correctAudio = new Audio(correctSound);
