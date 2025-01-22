@@ -49,3 +49,33 @@ p {
   font-size: 18px;
   color: #555;
 }
+
+.score-container {
+  box-shadow: none; /* Remove shadow */
+}
+
+.image-container {
+  box-shadow: none; /* Remove shadow */
+}
+
+.header-container {
+  box-shadow: none; /* Remove shadow */
+}
+
+.feedback-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12em; /* Three times larger */
+  pointer-events: none;
+  background: transparent; /* Transparent background */
+}
+
+.feedback-icon.correct {
+  color: green;
+}
+
+.feedback-icon.incorrect {
+  color: red;
+}
