@@ -7,6 +7,15 @@ import elefantImage from '../images/elefant.jpg';
 import fjarilImage from '../images/fjaril.jpg';
 import GameUI from './GameUI';
 
+const images = [
+  { src: apaImage, name: 'apa' },
+  { src: bananImage, name: 'banan' },
+  { src: cykelImage, name: 'cykel' },
+  { src: delfinImage, name: 'delfin' },
+  { src: elefantImage, name: 'elefant' },
+  { src: fjarilImage, name: 'fjäril' },
+];
+
 const Game: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -16,14 +25,7 @@ const Game: React.FC = () => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gameCompletedBefore, setGameCompletedBefore] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>('');
-  const images = [
-    { src: apaImage, name: 'apa' },
-    { src: bananImage, name: 'banan' },
-    { src: cykelImage, name: 'cykel' },
-    { src: delfinImage, name: 'delfin' },
-    { src: elefantImage, name: 'elefant' },
-    { src: fjarilImage, name: 'fjäril' },
-  ];
+  const [remainingImages, setRemainingImages] = useState(images); // New state for remaining images
 
   const startGame = () => {
     setScore(0); // Reset score when starting a new game
@@ -33,11 +35,19 @@ const Game: React.FC = () => {
     setGameFinished(false);
     setGameStarted(true);
     setUserInput(''); // Reset user input
+    setRemainingImages(images); // Initialize remaining images
     continueGame();
   };
 
   const continueGame = () => {
-    const randomImage = images[Math.floor(Math.random() * images.length)];
+    if (remainingImages.length === 0) {
+      setGameFinished(true);
+      setGameStarted(false);
+      setFeedback('Congratulations! You\'ve guessed all the images correctly! 🎉');
+      return;
+    }
+    const randomIndex = Math.floor(Math.random() * remainingImages.length);
+    const randomImage = remainingImages[randomIndex];
     setImage(randomImage.src);
     setFeedback(null);
     setShowContinue(false);
@@ -51,19 +61,9 @@ const Game: React.FC = () => {
       const currentImage = images.find(img => img.src === image);
       if (currentImage && key === currentImage.name[0].toUpperCase()) {
         setFeedback('Correct!');
-        setScore(prevScore => {
-          const newScore = prevScore + 1;
-          if (newScore === 5) {
-            setFeedback('Congratulations! You\'ve finished the game with a score of 5!');
-            setShowContinue(false); // Hide the continue button when the game is finished
-            setGameFinished(true); // Mark the game as finished
-            setGameStarted(false); // Mark the game as not started
-            setGameCompletedBefore(true); // Mark the game as completed before
-          } else {
-            setShowContinue(true);
-          }
-          return newScore;
-        });
+        setScore(prevScore => prevScore + 1);
+        setRemainingImages(prevImages => prevImages.filter(img => img.src !== image)); // Remove correctly guessed image
+        setShowContinue(true);
       } else {
         setFeedback('Try again!');
         setShowContinue(true);
@@ -93,7 +93,7 @@ const Game: React.FC = () => {
       gameStarted={gameStarted}
       gameCompletedBefore={gameCompletedBefore}
       userInput={userInput}
-      gameFinished={gameFinished} 
+      gameFinished={gameFinished} // Pass gameFinished state
     />
   );
 };
