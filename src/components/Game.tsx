@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import apaImage from '../images/apa.jpg';
 import bananImage from '../images/banan.jpg';
 import cykelImage from '../images/cykel.jpg';
+import delfinImage from '../images/delfin.jpg';
+import elefantImage from '../images/elefant.jpg';
+import fjarilImage from '../images/fjaril.jpg';
 import GameUI from './GameUI';
 
 const Game: React.FC = () => {
@@ -17,6 +20,9 @@ const Game: React.FC = () => {
     { src: apaImage, name: 'apa' },
     { src: bananImage, name: 'banan' },
     { src: cykelImage, name: 'cykel' },
+    { src: delfinImage, name: 'delfin' },
+    { src: elefantImage, name: 'elefant' },
+    { src: fjarilImage, name: 'fjäril' },
   ];
 
   const startGame = () => {
@@ -35,7 +41,7 @@ const Game: React.FC = () => {
     setImage(randomImage.src);
     setFeedback(null);
     setShowContinue(false);
-    setUserInput(''); 
+    setUserInput(''); // Reset user input
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
@@ -87,6 +93,7 @@ const Game: React.FC = () => {
       gameStarted={gameStarted}
       gameCompletedBefore={gameCompletedBefore}
       userInput={userInput}
+      gameFinished={gameFinished} 
     />
   );
 };

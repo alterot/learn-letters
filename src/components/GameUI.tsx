@@ -10,23 +10,25 @@ interface GameUIProps {
   gameStarted: boolean;
   gameCompletedBefore: boolean;
   userInput: string;
+  gameFinished: boolean; // Add gameFinished prop
 }
 
-const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput }) => {
+const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput, gameFinished }) => {
   return (
     <div>
-      <h1 className="score-container">Score: {score}</h1>
+      <h1 className="score-container">Poäng: {score}</h1>
       <div className="image-container" style={{ position: 'relative' }}>
         {image && <img src={image} alt="current" />}
         {feedback === 'Correct!' && <div className="feedback-icon correct">✔</div>}
         {feedback === 'Try again!' && <div className="feedback-icon incorrect">✖</div>}
       </div>
+      {gameFinished && <p>🎉GRATTIS du klarade det!🎉</p>}
       {!gameStarted && (
         <button onClick={onStart}>
-          {gameCompletedBefore ? 'Start Over' : 'Start'}
+          {gameCompletedBefore ? 'Spela igen' : 'Spela'}
         </button>
       )}
-      {showContinue && <button onClick={onContinue}>Continue</button>}
+      {showContinue && <button onClick={onContinue}>Nästa</button>}
       {gameStarted && (
         <input
           type="text"
