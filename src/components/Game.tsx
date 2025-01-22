@@ -5,6 +5,7 @@ import cykelImage from '../images/cykel.jpg';
 import delfinImage from '../images/delfin.jpg';
 import elefantImage from '../images/elefant.jpg';
 import fjarilImage from '../images/fjaril.jpg';
+import hundImage from '../images/hund.jpg';
 import GameUI from './GameUI';
 
 const images = [
@@ -14,6 +15,7 @@ const images = [
   { src: delfinImage, name: 'delfin' },
   { src: elefantImage, name: 'elefant' },
   { src: fjarilImage, name: 'fjäril' },
+  { src: hundImage, name: 'hund' },
 ];
 
 const Game: React.FC = () => {

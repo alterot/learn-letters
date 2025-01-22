@@ -28,7 +28,7 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
           {gameCompletedBefore ? 'Spela igen' : 'Spela'}
         </button>
       )}
-      {showContinue && <button onClick={onContinue}>Nästa</button>}
+      {showContinue && !gameFinished && <button onClick={onContinue}>Nästa</button>}
       {gameStarted && (
         <input
           type="text"
