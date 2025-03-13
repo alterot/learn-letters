@@ -18,8 +18,8 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
   return (
     <div>
       <h1 className="score-container">Poäng: {score} / {images.length}</h1>
-      <div className="image-container" style={{ position: 'relative' }}>
-        {image && <img src={image} alt="current" />}
+      <div className="image-container" style={{ position: 'relative', margin: '20px 0' }}>
+        {image && <img src={image} alt="current" style={{ maxWidth: '100%', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} />}
         {feedback === 'Correct!' && <div className="feedback-icon correct">✔</div>}
         {feedback === 'Try again!' && <div className="feedback-icon incorrect">✖</div>}
       </div>
@@ -29,7 +29,21 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
           {gameCompletedBefore ? 'Spela igen' : 'Spela'}
         </button>
       )}
-      {showContinue && !gameFinished && <button onClick={onContinue}>Nästa</button>}
+      <button
+        onClick={onContinue}
+        style={{
+          backgroundColor: '#add8e6',
+          color: '#fff',
+          padding: '10px 20px',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          marginTop: '10px',
+          visibility: showContinue && !gameFinished ? 'visible' : 'hidden',
+        }}
+      >
+        NÄSTA
+      </button>
       {gameStarted && (
         <input
           type="text"
@@ -37,13 +51,15 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
           readOnly
           style={{
             border: 'none',
-            borderBottom: '2px solid black',
+            borderBottom: '2px solid #333333',
             fontSize: '4em',
             fontWeight: 'bold',
             textAlign: 'center',
             textTransform: 'uppercase',
             width: '2em',
             margin: '20px 0',
+            backgroundColor: '#f0f8ff',
+            color: '#333333',
           }}
         />
       )}

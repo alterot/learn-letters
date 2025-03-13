@@ -1,40 +1,49 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f0f8ff; /* Alice Blue */
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  color: #333333; /* Dark Gray */
 }
 
 div {
   text-align: center;
-  background-color: #fff;
+  background-color: #ffffff; /* White */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/*   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 h1 {
-  color: #333;
+  color: #e28391; /* Light Pink */
 }
 
 button {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
+  font-size: 2em;
+  font-weight: bold;
+  color: #ffffff; /* White */
+  background: linear-gradient(135deg, #e28391, #add8e6); /* Gradient from Light Pink to Light Blue */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, transform 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #ff69b4, #87cefa); /* Gradient from Hot Pink to Light Sky Blue */
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 img {
@@ -43,19 +52,22 @@ img {
   max-width: 100%;
   height: auto;
   max-height: 300px; /* Adjust the max-height as needed */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 p {
   font-size: 18px;
-  color: #555;
+  color: #555555; /* Medium Gray */
 }
 
 .score-container {
-  box-shadow: none; /* Remove shadow */
+  color: #e28391; /* Light Pink */
 }
 
 .image-container {
-  box-shadow: none; /* Remove shadow */
+  position: relative;
+  margin: 20px 0;
 }
 
 .header-container {
@@ -64,18 +76,16 @@ p {
 
 .feedback-icon {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12em; /* Three times larger */
-  pointer-events: none;
-  background: transparent; /* Transparent background */
+  bottom: 5px;
+  right: 10px;
+  font-size: 10em; /* Three times larger */
+  background: none;
 }
 
 .feedback-icon.correct {
-  color: green;
+  color: green; 
 }
 
 .feedback-icon.incorrect {
-  color: red;
+  color: red; 
 }

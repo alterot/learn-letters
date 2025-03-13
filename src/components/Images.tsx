@@ -14,16 +14,16 @@ import musImage from '../images/mus.webp';
 import nyckelpigaImage from '../images/nyckelpiga.webp';
 import ormImage from '../images/orm.webp';
 import pandaImage from '../images/panda.webp';
-import quinoaImage from '../images/quinoa.webp';
+/* import quinoaImage from '../images/quinoa.webp'; */
 import robotImage from '../images/robot.webp';
 import solImage from '../images/sol.webp';
 import tagImage from '../images/tag.webp';
 import ubatImage from '../images/ubat.webp';
 import vargImage from '../images/varg.webp';
-import walkieTalkieImage from '../images/walkie-talkie.webp';
-import xylofonImage from '../images/xylofon.webp';
+/* import walkieTalkieImage from '../images/walkie-talkie.webp';
+import xylofonImage from '../images/xylofon.webp'; */
 import yxaImage from '../images/yxa.webp';
-import zebraImage from '../images/zebra.webp';
+/* import zebraImage from '../images/zebra.webp'; */
 import asnaImage from '../images/asna.webp';
 import appleImage from '../images/apple.webp';
 import odlaImage from '../images/odla.webp';
@@ -54,7 +54,7 @@ export const images = [
 /*   { src: walkieTalkieImage, name: 'walkie-talkie' }, */
 /*   { src: xylofonImage, name: 'xylofon' }, */
   { src: yxaImage, name: 'yxa' },
-  { src: zebraImage, name: 'zebra' },
+/*   { src: zebraImage, name: 'zebra' }, */
   { src: asnaImage, name: 'åsna' },
   { src: appleImage, name: 'äpple' },
   { src: odlaImage, name: 'ödla' },
