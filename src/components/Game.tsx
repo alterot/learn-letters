@@ -1,26 +1,8 @@
 import { useState, useEffect } from 'react';
-import apaImage from '../images/apa.jpg';
-import bananImage from '../images/banan.jpg';
-import cykelImage from '../images/cykel.jpg';
-import delfinImage from '../images/delfin.jpg';
-import elefantImage from '../images/elefant.jpg';
-import fjarilImage from '../images/fjaril.jpg';
-import hundImage from '../images/hund.jpg';
-import salImage from '../images/sal.jpg';
+import { images } from './Images';
 import GameUI from './GameUI';
 import correctSound from '../sounds/correct.wav';
 import incorrectSound from '../sounds/incorrect.wav';
-
-const images = [
-  { src: apaImage, name: 'apa' },
-  { src: bananImage, name: 'banan' },
-  { src: cykelImage, name: 'cykel' },
-  { src: delfinImage, name: 'delfin' },
-  { src: elefantImage, name: 'elefant' },
-  { src: fjarilImage, name: 'fjäril' },
-  { src: hundImage, name: 'hund' },
-  { src: salImage, name: 'säl' },
-];
 
 const correctAudio = new Audio(correctSound);
 const incorrectAudio = new Audio(incorrectSound);
