@@ -12,9 +12,10 @@ interface GameUIProps {
   gameCompletedBefore: boolean;
   userInput: string;
   gameFinished: boolean; // Add gameFinished prop
+  gameMode: 'easy' | 'hard'; // Add gameMode prop
 }
 
-const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput, gameFinished }) => {
+const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput, gameFinished, gameMode }) => {
   return (
     <div>
       <h1 className="score-container">Poäng: {score} / {images.length}</h1>
@@ -26,24 +27,12 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
       {gameFinished && <p>🎉GRATTIS du klarade det!🎉</p>}
       {!gameStarted && (
         <button onClick={onStart}>
-          {gameCompletedBefore ? 'Spela igen' : 'Spela'}
+          {gameCompletedBefore ? 'SPELA IGEN' : 'SPELA'}
         </button>
       )}
-      <button
-        onClick={onContinue}
-        style={{
-          backgroundColor: '#add8e6',
-          color: '#fff',
-          padding: '10px 20px',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          marginTop: '10px',
-          visibility: showContinue && !gameFinished ? 'visible' : 'hidden',
-        }}
-      >
-        NÄSTA
-      </button>
+      {showContinue && !gameFinished && (
+        <button onClick={onContinue}>NÄSTA</button>
+      )}
       {gameStarted && (
         <input
           type="text"
@@ -56,7 +45,7 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
             fontWeight: 'bold',
             textAlign: 'center',
             textTransform: 'uppercase',
-            width: '2em',
+            width: gameMode === 'easy' ? '2em' : 'auto',
             margin: '20px 0',
             backgroundColor: '#f0f8ff',
             color: '#333333',
