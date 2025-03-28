@@ -63,40 +63,54 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
   
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    // ❌ Stoppa all input om man väntar på att gå vidare
+    if (showContinue && event.key !== 'Enter') return;
+  
     const key = event.key.toUpperCase();
+
+    if (event.key === 'Backspace') {
+      setUserInput(prev => prev.slice(0, -1));
+      return;
+    }    
+  
     if (key === 'ENTER') {
       if (!gameStarted) {
         startGame();
       } else if (showContinue && !gameFinished) {
         continueGame();
       } else if (gameFinished) {
-        startGame(); // Restart the game if it is finished
+        startGame(); // Restart if finished
       } else if (image) {
         const currentImage = images.find(img => img.src === image);
         if (currentImage) {
-          if (gameMode === 'easy' && userInput.toLowerCase() === currentImage.name[0].toLowerCase()) {
+          const guess = userInput.toLowerCase();
+          const correctEasy = currentImage.name[0].toLowerCase();
+          const correctHard = currentImage.name.toLowerCase();
+  
+          const isCorrect =
+            (gameMode === 'easy' && guess === correctEasy) ||
+            (gameMode === 'hard' && guess === correctHard);
+  
+          if (isCorrect) {
             setFeedback('Correct!');
-            setScore(prevScore => prevScore + 1);
-            setRemainingImages(prevImages => prevImages.filter(img => img.src !== image)); // Remove correctly guessed image
+            setScore(prev => prev + 1);
+            setRemainingImages(prev => prev.filter(img => img.src !== image));
             setShowContinue(true);
-            correctAudio.play(); // Play correct sound
-          } else if (gameMode === 'hard' && userInput.toLowerCase() === currentImage.name.toLowerCase()) {
-            setFeedback('Correct!');
-            setScore(prevScore => prevScore + 1);
-            setRemainingImages(prevImages => prevImages.filter(img => img.src !== image)); // Remove correctly guessed image
-            setShowContinue(true);
-            correctAudio.play(); // Play correct sound
+            correctAudio.play();
           } else {
             setFeedback('Try again!');
             setShowContinue(true);
-            incorrectAudio.play(); // Play incorrect sound
+            incorrectAudio.play();
           }
         }
       }
       return;
     }
+  
+    // ✅ Bara tillåt bokstavsinmatning när spelet är aktivt och inte väntar
     setUserInput(prevInput => prevInput + key);
   }, [gameStarted, showContinue, gameFinished, image, gameMode, userInput, continueGame]);
+  
 
   useEffect(() => {
     if (!gameFinished) {

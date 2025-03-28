@@ -37,7 +37,7 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
         <input
           type="text"
           value={userInput}
-          readOnly
+          readOnly={showContinue}
           style={{
             border: 'none',
             borderBottom: '2px solid #333333',
