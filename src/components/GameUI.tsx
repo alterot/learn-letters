@@ -30,9 +30,13 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
           {gameCompletedBefore ? 'SPELA IGEN' : 'SPELA'}
         </button>
       )}
-      {showContinue && !gameFinished && (
-        <button onClick={onContinue}>NÄSTA</button>
-      )}
+        <button
+          onClick={onContinue}
+          style={{ visibility: showContinue && !gameFinished ? 'visible' : 'hidden' }}
+        >
+          NÄSTA
+      </button>
+
       {gameStarted && (
         <input
           type="text"

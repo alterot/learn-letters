@@ -63,15 +63,16 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
   
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    // ❌ Stoppa all input om man väntar på att gå vidare
+    // Tillåt Enter även när feedback visas, blockera övrig input
     if (showContinue && event.key !== 'Enter') return;
   
     const key = event.key.toUpperCase();
-
+  
+    // Backspace stöd
     if (event.key === 'Backspace') {
       setUserInput(prev => prev.slice(0, -1));
       return;
-    }    
+    }
   
     if (key === 'ENTER') {
       if (!gameStarted) {
@@ -79,17 +80,20 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
       } else if (showContinue && !gameFinished) {
         continueGame();
       } else if (gameFinished) {
-        startGame(); // Restart if finished
+        startGame();
       } else if (image) {
         const currentImage = images.find(img => img.src === image);
         if (currentImage) {
           const guess = userInput.toLowerCase();
-          const correctEasy = currentImage.name[0].toLowerCase();
-          const correctHard = currentImage.name.toLowerCase();
+  
+          // 👇 Stöd för både sträng och array av namn
+          const acceptedNames = Array.isArray(currentImage.name)
+            ? currentImage.name.map(n => n.toLowerCase())
+            : [currentImage.name.toLowerCase()];
   
           const isCorrect =
-            (gameMode === 'easy' && guess === correctEasy) ||
-            (gameMode === 'hard' && guess === correctHard);
+            (gameMode === 'easy' && acceptedNames.some(name => name[0] === guess[0])) ||
+            (gameMode === 'hard' && acceptedNames.includes(guess));
   
           if (isCorrect) {
             setFeedback('Correct!');
@@ -107,9 +111,10 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
       return;
     }
   
-    // ✅ Bara tillåt bokstavsinmatning när spelet är aktivt och inte väntar
+    // Lägg till bokstav om inte spärrat
     setUserInput(prevInput => prevInput + key);
   }, [gameStarted, showContinue, gameFinished, image, gameMode, userInput, continueGame]);
+  
   
 
   useEffect(() => {

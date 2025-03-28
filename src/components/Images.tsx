@@ -37,7 +37,7 @@ export const images = [
   { src: fjarilImage, name: 'fjäril' },
   { src: grisImage, name: 'gris' },
   { src: hundImage, name: 'hund' },
-  { src: isblockImage, name: 'isblock' },
+  { src: isblockImage, name: ['is', 'isbit', 'isblock'] },
   { src: jordgubbeImage, name: 'jordgubbe' },
   { src: kattImage, name: 'katt' },
   { src: lammImage, name: 'lamm' },

@@ -76,10 +76,12 @@ p {
 
 .feedback-icon {
   position: absolute;
-  bottom: 5px;
-  right: 10px;
-  font-size: 10em; /* Three times larger */
   background: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15em;
+  pointer-events: none;
 }
 
 .feedback-icon.correct {
