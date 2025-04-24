@@ -40,10 +40,11 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
   };
 
   useEffect(() => {
-    if (startImmediately && !gameStarted) {
+    if (startImmediately && !gameStarted && !gameFinished) {
       startGame();
     }
-  }, [startImmediately, gameStarted]);
+  }, [startImmediately, gameStarted, gameFinished]);
+  
 
   const continueGame = useCallback(() => {
     if (remainingImages.length === 0) {
