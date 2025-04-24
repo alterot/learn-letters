@@ -23,7 +23,7 @@ import vargImage from '../images/varg.webp';
 /* import walkieTalkieImage from '../images/walkie-talkie.webp';
 import xylofonImage from '../images/xylofon.webp'; */
 import yxaImage from '../images/yxa.webp';
-/* import zebraImage from '../images/zebra.webp'; */
+import zebraImage from '../images/zebra.webp';
 import asnaImage from '../images/asna.webp';
 import appleImage from '../images/apple.webp';
 import odlaImage from '../images/odla.webp';
@@ -40,7 +40,7 @@ export const images = [
   { src: isblockImage, name: ['is', 'isbit', 'isblock'] },
   { src: jordgubbeImage, name: 'jordgubbe' },
   { src: kattImage, name: 'katt' },
-  { src: lammImage, name: 'lamm' },
+  { src: lammImage, name: ['lamm', 'får'] },
   { src: musImage, name: 'mus' },
   { src: nyckelpigaImage, name: 'nyckelpiga' },
   { src: ormImage, name: 'orm' },
@@ -48,13 +48,13 @@ export const images = [
 /*   { src: quinoaImage, name: 'quinoa' }, */
   { src: robotImage, name: 'robot' },
   { src: solImage, name: 'sol' },
-  { src: tagImage, name: 'tåg' },
+  { src: tagImage, name: ['tåg', 'lok'] },
   { src: ubatImage, name: 'ubåt' },
   { src: vargImage, name: 'varg' },
 /*   { src: walkieTalkieImage, name: 'walkie-talkie' }, */
 /*   { src: xylofonImage, name: 'xylofon' }, */
   { src: yxaImage, name: 'yxa' },
-/*   { src: zebraImage, name: 'zebra' }, */
+  { src: zebraImage, name: 'zebra' },
   { src: asnaImage, name: 'åsna' },
   { src: appleImage, name: 'äpple' },
   { src: odlaImage, name: 'ödla' },

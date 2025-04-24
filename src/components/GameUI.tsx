@@ -18,7 +18,7 @@ interface GameUIProps {
 const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, onStart, onContinue, gameStarted, gameCompletedBefore, userInput, gameFinished, gameMode }) => {
   return (
     <div>
-      <h1 className="score-container">Poäng: {score} / {images.length}</h1>
+      <p className="score-container">Poäng: {score} / {images.length}</p>
       <div className="image-container" style={{ position: 'relative', margin: '20px 0' }}>
         {image && <img src={image} alt="current" style={{ maxWidth: '100%', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} />}
         {feedback === 'Correct!' && <div className="feedback-icon correct">✔</div>}
@@ -50,7 +50,7 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
             textAlign: 'center',
             textTransform: 'uppercase',
             width: gameMode === 'easy' ? '2em' : '12ch',
-            margin: '0',
+            margin: '20px 0',
             backgroundColor: '#f0f8ff',
             color: '#333333',
           }}

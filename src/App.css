@@ -20,6 +20,7 @@ div {
 
 h1 {
   color: #e28391; /* Light Pink */
+  margin-bottom: 0.2em;
 }
 
 button {
@@ -57,12 +58,13 @@ img {
 }
 
 p {
-  font-size: 18px;
-  color: #555555; /* Medium Gray */
+  font-size: 24px;
+  color: #e28391
 }
 
 .score-container {
   color: #e28391; /* Light Pink */
+  margin-top: 0.2em;
 }
 
 .image-container {

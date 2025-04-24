@@ -9,9 +9,10 @@ const incorrectAudio = new Audio(incorrectSound);
 
 interface GameProps {
   gameMode: 'easy' | 'hard';
+  startImmediately?: boolean;
 }
 
-const Game: React.FC<GameProps> = ({ gameMode }) => {
+const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
   const [image, setImage] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -20,31 +21,36 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gameCompletedBefore, setGameCompletedBefore] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>('');
-  const [remainingImages, setRemainingImages] = useState(images); // New state for remaining images
+  const [remainingImages, setRemainingImages] = useState(images);
 
   useEffect(() => {
-    // Preload audio files
     correctAudio.load();
     incorrectAudio.load();
   }, []);
 
   const startGame = () => {
-    setScore(0); // Reset score when starting a new game
+    setScore(0);
     setShowContinue(false);
     setFeedback(null);
     setImage(null);
     setGameFinished(false);
     setGameStarted(true);
-    setUserInput(''); // Reset user input
-    setRemainingImages(images); // Initialize remaining images
+    setUserInput('');
+    setRemainingImages(images);
   };
+
+  useEffect(() => {
+    if (startImmediately && !gameStarted) {
+      startGame();
+    }
+  }, [startImmediately, gameStarted]);
 
   const continueGame = useCallback(() => {
     if (remainingImages.length === 0) {
       setGameFinished(true);
       setGameStarted(false);
       setFeedback('GRATTIS! Du klarade alla bilderna! 🎉');
-      setGameCompletedBefore(true); // Update gameCompletedBefore when game is finished
+      setGameCompletedBefore(true);
       return;
     }
     const randomIndex = Math.floor(Math.random() * remainingImages.length);
@@ -52,7 +58,7 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
     setImage(randomImage.src);
     setFeedback(null);
     setShowContinue(false);
-    setUserInput(''); // Reset user input
+    setUserInput('');
   }, [remainingImages]);
 
   useEffect(() => {
@@ -60,20 +66,17 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
       continueGame();
     }
   }, [gameStarted, gameFinished, image, continueGame]);
-  
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    // Tillåt Enter även när feedback visas, blockera övrig input
     if (showContinue && event.key !== 'Enter') return;
-  
+
     const key = event.key.toUpperCase();
-  
-    // Backspace stöd
+
     if (event.key === 'Backspace') {
       setUserInput(prev => prev.slice(0, -1));
       return;
     }
-  
+
     if (key === 'ENTER') {
       if (!gameStarted) {
         startGame();
@@ -85,16 +88,14 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
         const currentImage = images.find(img => img.src === image);
         if (currentImage) {
           const guess = userInput.toLowerCase();
-  
-          // 👇 Stöd för både sträng och array av namn
           const acceptedNames = Array.isArray(currentImage.name)
             ? currentImage.name.map(n => n.toLowerCase())
             : [currentImage.name.toLowerCase()];
-  
+
           const isCorrect =
             (gameMode === 'easy' && acceptedNames.some(name => name[0] === guess[0])) ||
             (gameMode === 'hard' && acceptedNames.includes(guess));
-  
+
           if (isCorrect) {
             setFeedback('Correct!');
             setScore(prev => prev + 1);
@@ -110,12 +111,9 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
       }
       return;
     }
-  
-    // Lägg till bokstav om inte spärrat
+
     setUserInput(prevInput => prevInput + key);
   }, [gameStarted, showContinue, gameFinished, image, gameMode, userInput, continueGame]);
-  
-  
 
   useEffect(() => {
     if (!gameFinished) {
@@ -139,8 +137,8 @@ const Game: React.FC<GameProps> = ({ gameMode }) => {
       gameStarted={gameStarted}
       gameCompletedBefore={gameCompletedBefore}
       userInput={userInput}
-      gameFinished={gameFinished} // Pass gameFinished state
-      gameMode={gameMode} // Pass gameMode state
+      gameFinished={gameFinished}
+      gameMode={gameMode}
     />
   );
 };

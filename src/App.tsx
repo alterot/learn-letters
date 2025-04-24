@@ -12,11 +12,15 @@ export default function App() {
 
   return (
     <div className="header-container">
-      <h1>Lär dig bokstäver!</h1>
+      <h1>
+        {gameMode === 'easy' && 'Vilken bokstav börjar ordet på?'}
+        {gameMode === 'hard' && 'Kan du stava till hela ordet?'}
+        {gameMode === null && 'Välkommen till bokstavspelet!'}
+      </h1>
       {gameMode === null ? (
         <GameModeSelection onSelectMode={handleSelectMode} />
       ) : (
-        <Game gameMode={gameMode} />
+        <Game gameMode={gameMode} startImmediately={true} />
       )}
     </div>
   );

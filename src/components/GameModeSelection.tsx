@@ -7,6 +7,7 @@ interface GameModeSelectionProps {
 const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onSelectMode }) => {
   return (
     <div className="game-mode-selection">
+       <p>Vem spelar idag?</p>
       <button onClick={() => onSelectMode('easy')}>HEDDA</button>
       <button onClick={() => onSelectMode('hard')}>SELMA</button>
     </div>
