@@ -49,8 +49,8 @@ const GameUI: React.FC<GameUIProps> = ({ score, image, feedback, showContinue, o
             fontWeight: 'bold',
             textAlign: 'center',
             textTransform: 'uppercase',
-            width: gameMode === 'easy' ? '2em' : 'auto',
-            margin: '20px 0',
+            width: gameMode === 'easy' ? '2em' : '12ch',
+            margin: '0',
             backgroundColor: '#f0f8ff',
             color: '#333333',
           }}
