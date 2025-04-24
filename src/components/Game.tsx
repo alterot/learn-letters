@@ -3,6 +3,8 @@ import { images } from './Images';
 import GameUI from './GameUI';
 import correctSound from '../sounds/correct.wav';
 import incorrectSound from '../sounds/incorrect.wav';
+import confetti from 'canvas-confetti';
+
 
 const correctAudio = new Audio(correctSound);
 const incorrectAudio = new Audio(incorrectSound);
@@ -51,6 +53,17 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
       setGameStarted(false);
       setFeedback('GRATTIS! Du klarade alla bilderna! 🎉');
       setGameCompletedBefore(true);
+      confetti({
+        particleCount: 500,
+        spread: 160,
+        startVelocity: 45,
+        gravity: 0.6,
+        scalar: 1.2,
+        ticks: 250,
+        origin: { y: 0.6 },
+        zIndex: 999
+      });
+         
       return;
     }
     const randomIndex = Math.floor(Math.random() * remainingImages.length);
@@ -84,10 +97,30 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
       (gameMode === 'hard' && acceptedNames.includes(guess));
 
     if (isCorrect) {
-      setFeedback('Correct!');
+      const newRemaining = remainingImages.filter(img => img.src !== image);
+      const allDone = newRemaining.length === 0;
+    
+      setFeedback(allDone ? 'GRATTIS! Du klarade alla bilderna! 🎉' : 'Correct!');
       setScore(prev => prev + 1);
-      setRemainingImages(prev => prev.filter(img => img.src !== image));
-      setShowContinue(true);
+      setRemainingImages(newRemaining);
+      setGameFinished(allDone);
+      setGameStarted(!allDone);
+      setShowContinue(!allDone);
+    
+      if (allDone) {
+        setGameCompletedBefore(true);
+        confetti({
+          particleCount: 500,
+          spread: 160,
+          startVelocity: 45,
+          gravity: 0.6,
+          scalar: 1.2,
+          ticks: 250,
+          origin: { y: 0.6 },
+          zIndex: 999
+        });
+      }
+    
       correctAudio.play();
     } else {
       setFeedback('Try again!');

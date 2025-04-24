@@ -44,8 +44,8 @@ export const images = [
   { src: musImage, name: 'mus' },
   { src: nyckelpigaImage, name: 'nyckelpiga' },
   { src: ormImage, name: 'orm' },
-  { src: pandaImage, name: 'panda' },
-/*   { src: quinoaImage, name: 'quinoa' }, */
+  { src: pandaImage, name: 'panda' }, 
+/*   { src: quinoaImage, name: 'quinoa' },  */
   { src: robotImage, name: 'robot' },
   { src: solImage, name: 'sol' },
   { src: tagImage, name: ['tåg', 'lok'] },
