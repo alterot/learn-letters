@@ -44,7 +44,6 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
       startGame();
     }
   }, [startImmediately, gameStarted, gameFinished]);
-  
 
   const continueGame = useCallback(() => {
     if (remainingImages.length === 0) {
@@ -67,6 +66,35 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
       continueGame();
     }
   }, [gameStarted, gameFinished, image, continueGame]);
+  
+
+  const handleAnswer = () => {
+    if (!gameStarted || showContinue || gameFinished || !image) return;
+
+    const currentImage = images.find(img => img.src === image);
+    if (!currentImage) return;
+
+    const guess = userInput.toLowerCase();
+    const acceptedNames = Array.isArray(currentImage.name)
+      ? currentImage.name.map(n => n.toLowerCase())
+      : [currentImage.name.toLowerCase()];
+
+    const isCorrect =
+      (gameMode === 'easy' && acceptedNames.some(name => name[0] === guess[0])) ||
+      (gameMode === 'hard' && acceptedNames.includes(guess));
+
+    if (isCorrect) {
+      setFeedback('Correct!');
+      setScore(prev => prev + 1);
+      setRemainingImages(prev => prev.filter(img => img.src !== image));
+      setShowContinue(true);
+      correctAudio.play();
+    } else {
+      setFeedback('Try again!');
+      setShowContinue(true);
+      incorrectAudio.play();
+    }
+  };
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (showContinue && event.key !== 'Enter') return;
@@ -85,30 +113,8 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
         continueGame();
       } else if (gameFinished) {
         startGame();
-      } else if (image) {
-        const currentImage = images.find(img => img.src === image);
-        if (currentImage) {
-          const guess = userInput.toLowerCase();
-          const acceptedNames = Array.isArray(currentImage.name)
-            ? currentImage.name.map(n => n.toLowerCase())
-            : [currentImage.name.toLowerCase()];
-
-          const isCorrect =
-            (gameMode === 'easy' && acceptedNames.some(name => name[0] === guess[0])) ||
-            (gameMode === 'hard' && acceptedNames.includes(guess));
-
-          if (isCorrect) {
-            setFeedback('Correct!');
-            setScore(prev => prev + 1);
-            setRemainingImages(prev => prev.filter(img => img.src !== image));
-            setShowContinue(true);
-            correctAudio.play();
-          } else {
-            setFeedback('Try again!');
-            setShowContinue(true);
-            incorrectAudio.play();
-          }
-        }
+      } else {
+        handleAnswer();
       }
       return;
     }
@@ -140,6 +146,7 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
       userInput={userInput}
       gameFinished={gameFinished}
       gameMode={gameMode}
+      onAnswer={handleAnswer}
     />
   );
 };
