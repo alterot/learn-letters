@@ -17,6 +17,26 @@ export default function App() {
         {gameMode === 'hard' && 'Kan du stava till hela ordet?'}
         {gameMode === null && 'Välkommen till bokstavspelet!'}
       </h1>
+
+      {gameMode !== null && (
+        <button
+          onClick={() => setGameMode(null)}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            left: '10px',
+            background: 'none',
+            border: 'none',
+            color: '#555',
+            fontSize: '1em',
+            cursor: 'pointer',
+            textDecoration: 'underline'
+          }}
+        >
+          ← Tillbaka
+        </button>
+      )}
+
       {gameMode === null ? (
         <GameModeSelection onSelectMode={handleSelectMode} />
       ) : (

@@ -34,7 +34,7 @@ const GameUI: React.FC<GameUIProps> = ({
     <div>
       <p className="score-container">Poäng: {score} / {images.length}</p>
 
-      <div className="image-container" style={{ position: 'relative', margin: '20px 0' }}>
+      <div className="image-container" style={{ position: 'relative', margin: '10px 0' }}>
         {image && (
           <img
             src={image}
