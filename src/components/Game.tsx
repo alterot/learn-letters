@@ -81,6 +81,8 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
   }, [gameStarted, gameFinished, image, continueGame]);
   
 
+  const WINNING_SCORE = 10;
+
   const handleAnswer = () => {
     if (!gameStarted || showContinue || gameFinished || !image) return;
 
@@ -98,15 +100,27 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
 
     if (isCorrect) {
       const newRemaining = remainingImages.filter(img => img.src !== image);
-      const allDone = newRemaining.length === 0;
-    
+      const newScore = score + 1;
+      const allDone = newScore >= WINNING_SCORE;
+
+      // Om bilderna tar slut innan man nått WINNING_SCORE
+      if (newRemaining.length === 0 && !allDone) {
+        setFeedback(`Slut på bilder! Du klarade ${newScore} rätt.`);
+        setScore(newScore);
+        setGameFinished(true);
+        setGameStarted(false);
+        setShowContinue(false);
+        incorrectAudio.play();
+        return;
+      }
+
       setFeedback(allDone ? 'GRATTIS! Du klarade alla bilderna! 🎉' : 'Correct!');
-      setScore(prev => prev + 1);
+      setScore(newScore);
       setRemainingImages(newRemaining);
       setGameFinished(allDone);
       setGameStarted(!allDone);
       setShowContinue(!allDone);
-    
+
       if (allDone) {
         setGameCompletedBefore(true);
         confetti({
@@ -120,7 +134,7 @@ const Game: React.FC<GameProps> = ({ gameMode, startImmediately }) => {
           zIndex: 999
         });
       }
-    
+
       correctAudio.play();
     } else {
       setFeedback('Try again!');

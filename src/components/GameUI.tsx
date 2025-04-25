@@ -1,5 +1,4 @@
 import React from 'react';
-import { images } from './Images';
 
 interface GameUIProps {
   score: number;
@@ -32,7 +31,7 @@ const GameUI: React.FC<GameUIProps> = ({
 }) => {
   return (
     <div>
-      <p className="score-container">Poäng: {score} / {images.length}</p>
+      <p className="score-container">Poäng: {score} / 10</p>
 
       <div className="image-container" style={{ position: 'relative', margin: '10px 0' }}>
         {image && (
@@ -58,13 +57,6 @@ const GameUI: React.FC<GameUIProps> = ({
         </button>
       )}
 
-      <button
-        onClick={onContinue}
-        style={{ visibility: showContinue && !gameFinished ? 'visible' : 'hidden' }}
-      >
-        NÄSTA
-      </button>
-
       {gameStarted && (
         <>
           <input
@@ -84,18 +76,35 @@ const GameUI: React.FC<GameUIProps> = ({
               color: '#333333',
             }}
           />
-          <button
-            onClick={onAnswer}
-            disabled={showContinue || gameFinished}
-            style={{
-              fontSize: '1.5em',
-              padding: '10px 20px',
-              opacity: showContinue || gameFinished ? 0.5 : 1,
-              cursor: showContinue || gameFinished ? 'default' : 'pointer'
-            }}
-          >
-            SVARA
-          </button>
+
+          <div style={{ display: 'flex', gap: '1em', justifyContent: 'center', marginTop: '1em' }}>
+            <button
+              onClick={onAnswer}
+              disabled={showContinue || gameFinished}
+              style={{
+                fontSize: '1.5em',
+                padding: '10px 20px',
+                opacity: showContinue || gameFinished ? 0.5 : 1,
+                cursor: showContinue || gameFinished ? 'default' : 'pointer'
+              }}
+            >
+              SVARA
+            </button>
+
+            <button
+              onClick={onContinue}
+              disabled={!showContinue || gameFinished}
+              style={{
+                fontSize: '1.5em',
+                padding: '10px 20px',
+                opacity: !showContinue || gameFinished ? 0.5 : 1,
+                cursor: !showContinue || gameFinished ? 'default' : 'pointer'
+              }}
+            >
+              NÄSTA
+            </button>
+
+          </div>
         </>
       )}
     </div>
